@@ -1,0 +1,5 @@
+# Ignore composer generated files
+s3-upload/composer.phar
+s3-upload/composer.lock
+s3-upload/composer-test.lock
+s3-upload/vendor/*
