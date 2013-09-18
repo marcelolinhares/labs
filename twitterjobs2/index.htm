@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt">
+<head>
+	<title>Exemplo Mashup</title>
+	<meta name="resource-type" content="document" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta name="revisit-after" content="1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="mashup, emprego, exemplo," />
+	<meta name="robots" content="ALL" />
+
+	<meta name="distribution" content="Global" />
+	<meta name="rating" content="General" />
+	<meta name="author" content="Marcelo Linhares - marcelolinhares.com" />
+	<meta name="language" content="pt-br,en" />
+	<meta name="doc-class" content="Completed" />
+	<meta name="doc-rights" content="Public" />
+	<style type="text/css" media="all">
+		@import url("estilo.css");
+	</style>
+	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	
+	<script type="text/javascript">
+	// URL Chamada do Twitter com o c
+	URL_TWITTER = "http://search.twitter.com/search.json?callback=";
+	CALBACK_FUNCTION = "exibeVagas";
+	RESULTS = "100";
+	TAGS_JOBS = ["java",".net","php","python","rails","html","javascript","jquery","ajax","mashup","ejb","j2ee","django","apache","mysql","oracle","sap","interface","bi","mysql","testes"];
+	TWITTER_PROFILES = "+from:vagasnaweb+OR+from:vagasMJV+OR+from:vagaseminfo+OR+from:JobsFactory+OR+from:empregobrasil+OR+from:1001java+OR+from:trampos";
+	REGEX_URL = "((http:\/\/)|(www))(([a-zA-Z]|[0-9]|[\.]|[\/])*)";	
+	
+	// no onload da página
+	
+	
+	/**
+	 *  chama a função ao digitar no input
+	 *
+	 */
+	chamaFuncaoAoDigitar = function(){
+	$("#chave-trampo").keyup(function(){
+		// só executa a função se tiver mais de 2 digitos
+		if(this.value.length>1){			
+			chamaFuncaoAjax(this.value);
+		}
+	})};
+
+	chamaFuncaoAjax = function(keyword){
+		$("#imagem-loading").css("visibility","visible");
+		$.ajax({
+		  dataType: "jsonp",
+		  jsonp: "exibeVagas",
+		  url: "http://search.twitter.com/search.json?q=" + keyword + TWITTER_PROFILES + "&rpp=" + RESULTS  + "&callback=exibeVagas"
+	})};
+	
+	
+	
+	exibeVagas = function(dados){
+		var linha= ""; 
+		if(dados.results.length==0){
+			linha = "Não foram encontrados resultados para sua pesquisa sobre <strong>" + $("#chave-trampo").val() + "</strong>";
+		}
+		else {
+			// percorre todos os resultados
+			for(var i=0; i < dados.results.length; i++) {
+				    linha+="<li>" + trataDataTwitter(dados.results[i]['created_at'],"/") + " <a href='http://twitter.com/"+dados.results[i]['from_user']+ "/statuses/"+dados.results[i]['id']+"'>twitt</a> | " + replaceTextToLink(dados.results[i]['text']) +  " by  <span class='nome'><a href='http://twitter.com/"+dados.results[i]['from_user']+ "'>@" + dados.results[i]['from_user']+ "</a></span> </li>";
+			}
+		}
+		$("#painel-vagas").html(linha);
+		$("#imagem-loading").css("visibility","hidden");
+		zebraLinha();
+	}
+	
+	zebraLinha = function(){
+		$("#painel-vagas li:nth-child(odd)").addClass("linha-zebrada");
+	}
+	
+	trataDataTwitter = function(data, separador){
+		tokens = data.split(" ")
+		return tokens[1] + separador + tokens[2] + separador + tokens[3];	
+	}	
+
+	carregaTagCloud = function(array_tags, id) {
+		t ="";
+		for(i=0; i< array_tags.length;i++) {
+			//t+="<span onclick=\"chamaFuncaoAjax('" + array_tags[i] + "');$('#chave-trampo').val('" + array_tags[i] + "')\">" + array_tags[i] + "</span>";
+			t+="<span>" + array_tags[i] + "</span>";
+		};
+		$("#" + id).html(t);
+		bindClickTags();
+	}
+	
+	bindClickTags = function(){
+		$("#tag-cloud-view span").click(function(){
+			chamaFuncaoAjax($(this).html());
+			$("#chave-trampo").val($(this).html());
+		});
+	}
+	
+	replaceTextToLink = function(text){
+		reg = new RegExp(REGEX_URL);
+		reg = reg.exec(text);
+		if(reg) {
+			text = text.replace(reg[0],"<a href='" + reg[0] + "'>" + reg[0] + "</a>");
+		}
+		return text;
+	}
+	
+	loadResult = function(){
+		if($("#chave-trampo").val()!=""){
+			chamaFuncaoAjax( $("#chave-trampo").val() );
+		}
+	}
+	
+	$(function(){
+		loadResult();
+		carregaTagCloud(TAGS_JOBS,"tag-cloud-view");
+		chamaFuncaoAoDigitar();	
+	})
+	
+	
+	</script>
+</head>
+
+<body>
+
+
+<h1 class="titulo">TwiiterJobs - Procure vagas de TI no Twitter</h1>
+<h2 class="titulo-complemento">Vagas e Oportunidades de TI no Twitter</h2>
+<br clear="all" />
+<h1>Quero trampar com: <input type="text" name="trampo" id="chave-trampo" /> <img src="loading.gif" style="visibility: hidden" id="imagem-loading"/></h1>
+
+<hr size="1" noshade="noshade" />
+
+
+
+<ul id="painel-vagas">
+ 
+
+</ul>
+
+
+<br clear="all" />
+
+´<div id="tag-cloud"><h3>Tags:</h3> <div id="tag-cloud-view"></div></div>
+
+<br clear="all" />
+<hr size="1" noshade="noshade" />
+<h3>Mashup de exemplo do mini-curso ministrado na <a href="http://www.inf.pucminas.br/graduacao/computacao">Ciência da Computação</a> da <a href="http://www.inf.pucminas.br">PUC Minas</a> para buscar vagas na web <span class="dia"> -  </span> <span class="mini">twitter, feeds</span> </h3>
+<h3>Twitters procurados: <a href="http://twitter.com/vagasnaweb">@vagasnaweb</a>, <a href="http://twitter.com/vagasMJV">@vagasMJV</a>, <a href="http://twitter.com/vagaseminfo">@vagaseminfo</a>, <a href="http://twitter.com/JobsFactory">@JobsFactory</a>, <a href="http://twitter.com/empregobrasil">@empregobrasil</a>, <a href="http://twitter.com/1001java">@1001java</a>, <a href="http://twitter.com/trampos">@trampos</a> </h3>
+<h3><a href="http://www.orkut.com.br/Main#AppInfo.aspx?appId=712171774121&ref=SR">Adicione esta APP no seu orkut</a></h3>
+<hr size="1" noshade="noshade" />
+Desenvolvido por <a href="http://www.marcelolinhares.com">Marcelo Linhares</a>, código fonte em: <a href="http://code.google.com/p/mashup-twitterjobs/">http://code.google.com/p/mashup-twitterjobs/</a>
+</body>
+<!--
+twitters procurados
+http://twitter.com/vagasMJV
+http://twitter.com/vagasnaweb
+http://twitter.com/rhuol
+http://twitter.com/empregoscombr
+http://twitter.com/EmpregosVagas
+http://twitter.com/empregobrasil
+http://twitter.com/1001java
+http://twitter.com/vagas_pra_ti
+
+--> 
+</html>
+
+
+

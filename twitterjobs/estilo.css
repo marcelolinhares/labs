@@ -1,0 +1,178 @@
+	body {
+		font: 0.9em Arial,sans-serif;
+		_font: 70% Arial,sans-serif;
+
+	}
+	
+	table td, table th {
+		font-size: 0.8em;
+		border-left: 1px solid #CCC;
+		border-bottom: 1px solid #CCC;
+		padding: 4px;
+	}
+	
+	table th {
+		background: #f4f4f4;
+		font-size: 0.7em;
+	}
+	table td {
+		text-align: center;
+	}
+	.mini {
+			color: #CCC;
+			font-weight: normal !important;
+	}
+	h1 {
+		color: #006CB7;
+		border-top: 15px solid #006CB7;
+		font-size: 4.3em;
+		text-align: left;
+		margin-top: 0px;
+	}
+	
+	h1 input { 
+		padding: 10px;
+		font-size: 32px;
+		font-weight: bold;
+		width: 400px;
+	}
+	#editar-meu-portfolio, #filtrar-dados {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	#filtrar-dados-exibe label {
+		cursor: pointer;
+	}
+	#filtrar-dados-exibe {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	
+	.baixa { 
+		color: red; 
+		background: url("down_r.gif") 0px 2px no-repeat;
+		 padding-left: 15px;
+	}
+	.alta { 
+		color: green; 
+		background: url("up_g.gif") 1px 0px no-repeat;
+		 padding-left: 15px;
+			
+	}
+	.dados-empresa { background-color: #b2ffd8; }
+	.cotacao-diaria { background: #fffab2; }
+	.historico { background: #ffcdcd ;}
+	.minhas-acoes { background: #cdfff7; }
+	
+	fieldset h4{
+		margin-bottom: -2px;
+	}
+	fieldset p{
+		font-size: 0.9em;
+		padding: 3px;
+
+	}
+	fieldset input {
+		padding: 5px;
+		font-weight: bold;
+	}
+	.exibe-grafico {
+		cursor:pointer;
+	}
+	.versao {
+		color: #CCC;
+		font-size: 0.6em;
+		border-left: 2px solid #CCC;
+		padding-left: 7px;
+	}
+
+
+	/* Linha */
+	
+	#painel-vagas {
+		font-size: 1.2em;
+		padding-left: 0px;
+	}
+	
+	
+	
+	#tag-cloud h3 {
+		font-size: 2.8em;
+		color: #006CB7;
+		margin-top: 7px;
+		margin-bottom: 0px;
+	}
+	#painel-vagas li {
+		list-style-type: none;
+		color: #2F2F2F;
+		border-bottom: 1px solid #CCC;
+		padding: 10px 0;
+		padding-left: 5px;
+		margin: 0px;
+	}
+	#painel-vagas li a:hover {
+		background: #006CB7;
+		color: #FFF;
+	}
+	#painel-vagas li a {
+		color: #006CB7;
+	}	
+	#painel-vagas li .nome a {
+		color: #000;
+		font-weight: bold;
+		background: #FFF47F;
+		font-size: 12px;
+	}
+	
+	.linha-zebrada {
+		background: #EFEFEF;
+	}
+	#tag-cloud {
+
+	}
+	#tag-cloud  span.master{
+		color: #000;
+		font-weight: bold;
+		background: #FFF47F;
+	}
+	#tag-cloud-view {
+		font-size: 22px;
+		width: 98% !important;
+		height:auto;
+		overflow: hidden;
+	}
+	#tag-cloud-view span {
+		cursor: pointer;
+		padding: 4px;
+		font-weight: bold;
+	}
+	
+	#tag-cloud  span:hover {
+		background: #006CB7;
+		color: #FFF;
+	}
+	
+	a {	color: #006CB7;	}
+	a:hover { 
+		background: #006CB7;
+		color: #FFF;
+	}
+	
+	h1.titulo {
+		background: url("logo.png") no-repeat;
+		font-size: 1px;
+		text-indent: -900000px;
+		width:180px;
+		height: 90px;
+		border-top: none;
+		display:block;
+		float: left;
+	}
+	
+	
+	h2.titulo-complemento {
+		float: left;
+		width: 500px;
+		padding-top: 15px;
+		color:#999999;
+	}
